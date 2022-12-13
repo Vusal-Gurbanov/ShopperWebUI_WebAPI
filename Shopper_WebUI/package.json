@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "devDependencies": {
+  },
+  "dependencies": {
+    "bootstrap": "5.2.2",
+    "jquery": "3.6.1",
+    "ckeditor": "4.12.1"
+  }
+}

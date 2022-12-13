@@ -1,0 +1,53 @@
+﻿@model ProductListModel
+
+@{
+    ViewData["Title"] = "ProductList";
+}
+
+<h1>Admin Products</h1>
+<hr />
+@if(Model.Products.Count>0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Products)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td width="80">
+                        <img src="~/img/@item.Images[0].ImageUrl" width="80" />
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@Html.Raw(item.Description)</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/admin/products/@item.Id">Edit</a>
+                        <form action="/admin/deleteproduct" method="post" style="display:inline">
+                            <input type="hidden" value="@item.Id" name="productId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                       
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+}
+else{
+    <div class="alert alert-warning">
+        <h4>No Products</h4>
+    </div>
+}
+

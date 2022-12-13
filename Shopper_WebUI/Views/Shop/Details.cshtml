@@ -1,0 +1,75 @@
+﻿@model ProductDetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="~/img/@Model.Product.Images[0].ImageUrl" alt="@Model.Product.Name" class="fluid-img" id="imageBox" />
+            </div>
+        </div>
+        <div class="row">
+            @for (int i = 0; i < Model.Product.Images.Count; i++)
+            {
+                <div class="col-md-3">
+                    <img src="~/img/@Model.Product.Images[i].ImageUrl" alt="@Model.Product.Name" class="img-fluid" style="display-block" onclick=myFunction(this) />
+                </div>
+            }
+        </div>
+
+    </div>
+    <div class="col-md-9">
+        <h1 class="mb-3">
+            @Model.Product.Name
+        </h1>
+        <hr />
+        @foreach (var item in Model.Categories)
+        {
+            <a href="#" class="btn btn-link p-0 mb-3">@item.Name</a>
+        }
+
+        <div class="mb-3">
+            <h4 class="text-primary mb-3">
+                @Model.Product.Price TL
+            </h4>
+
+            <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                <input type="hidden" name="productId" value="@Model.Product.Id" />
+				<div class="row">
+					<div class="col-md-3">
+                         <button type="submit" class="btn btn-outline-primary">
+                           <span class="fas fa-cart-plus"></span> Add To Cart</button>
+                    </div>
+					<div class="col-md-6">
+                        <input type="number" name="quantity" class="form-control" value="1" min="1" step="1"/>
+                    </div>
+                </div>		
+              
+            </form>
+
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <ul class="nav nav-tabs mt-2" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#comment" type="button" role="tab" aria-controls="home" aria-selected="true">Yorumlar</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#detail" type="button" role="tab" aria-controls="profile" aria-selected="false">Ürün Detay</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="comment" role="tabpanel" aria-labelledby="home-tab" data-product-id="@Model.Product.Id" data-url="@Url.Action(action:"ShowProductComments", controller:"Comment", new{id=Model.Product.Id})"> </div>
+            @* <partial name="_PartialComments" for="@Model.Comments" />*@
+            <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="profile-tab">@Html.Raw(Model.Product.Description)</div>
+
+       
+    </div>
+</div>
+
+
+<script src="~/js/comment.js" type="text/javascript"></script>
